@@ -5,6 +5,10 @@ import Order from '../models/orderModel.js';
 // @route   POST /api/orders
 // @access  Private
 const addOrderItems = asyncHandler(async (req, res) => {
+  if (req.csrfToken() !== req.body._csrf) {
+    return res.status(403).json({ message: 'CSRF Token Invalid' });
+  }
+
   const {
     orderItems,
     shippingAddress,
@@ -40,6 +44,10 @@ const addOrderItems = asyncHandler(async (req, res) => {
 // @route   GET /api/orders/:id
 // @access  Private
 const getOrderById = asyncHandler(async (req, res) => {
+  if (req.csrfToken() !== req.body._csrf) {
+    return res.status(403).json({ message: 'CSRF Token Invalid' });
+  }
+
   const order = await Order.findById(req.params.id).populate(
     'user',
     'name email'
@@ -57,6 +65,10 @@ const getOrderById = asyncHandler(async (req, res) => {
 // @route   PUT /api/orders/:id/pay
 // @access  Private
 const updateOrderToPaid = asyncHandler(async (req, res) => {
+  if (req.csrfToken() !== req.body._csrf) {
+    return res.status(403).json({ message: 'CSRF Token Invalid' });
+  }
+
   const order = await Order.findById(req.params.id);
 
   if (order) {
@@ -82,6 +94,10 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
 // @route   PUT /api/orders/myorders
 // @access  Private
 const getMyOrders = asyncHandler(async (req, res) => {
+  if (req.csrfToken() !== req.body._csrf) {
+    return res.status(403).json({ message: 'CSRF Token Invalid' });
+  }
+
   const orders = await Order.find({ user: req.user._id });
   res.json(orders);
 });
@@ -90,6 +106,10 @@ const getMyOrders = asyncHandler(async (req, res) => {
 // @route   GET /api/orders
 // @access  Private/Admin
 const getOrders = asyncHandler(async (req, res) => {
+  if (req.csrfToken() !== req.body._csrf) {
+    return res.status(403).json({ message: 'CSRF Token Invalid' });
+  }
+
   const orders = await Order.find({}).populate('user', 'id name');
   res.json(orders);
 });
@@ -98,6 +118,10 @@ const getOrders = asyncHandler(async (req, res) => {
 // @route   GET /api/orders/:id/deliver
 // @access  Private/Admin
 const updateOrderToDelivered = asyncHandler(async (req, res) => {
+  if (req.csrfToken() !== req.body._csrf) {
+    return res.status(403).json({ message: 'CSRF Token Invalid' });
+  }
+  
   const order = await Order.findById(req.params.id);
 
   if (order) {

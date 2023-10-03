@@ -18,13 +18,16 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
-    "csurf": "^1.11.0",
+    "connect-mongo": "^5.0.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-async-handler": "^1.1.4",
+    "express-session": "^1.17.3",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.13",
-    "multer": "^1.4.2"
+    "multer": "^1.4.2",
+    "passport": "^0.6.0",
+    "passport-google-oauth20": "^2.0.0"
   },
   "devDependencies": {
     "concurrently": "^5.3.0",

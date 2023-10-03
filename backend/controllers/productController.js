@@ -5,6 +5,11 @@ import Product from '../models/productModel.js';
 // @route   GET /api/products
 // @access  Public
 const getProducts = asyncHandler(async (req, res) => {
+
+  if (req.csrfToken() !== req.body._csrf) {
+    return res.status(403).json({ message: 'CSRF Token Invalid' });
+  }
+
   const pageSize = 8;
   const page = Number(req.query.pageNumber) || 1;
 
@@ -29,6 +34,10 @@ const getProducts = asyncHandler(async (req, res) => {
 // @route   GET /api/products/:id
 // @access  Public
 const getProductById = asyncHandler(async (req, res) => {
+  if (req.csrfToken() !== req.body._csrf) {
+    return res.status(403).json({ message: 'CSRF Token Invalid' });
+  }
+  
   const product = await Product.findById(req.params.id);
 
   if (product) {
@@ -43,6 +52,11 @@ const getProductById = asyncHandler(async (req, res) => {
 // @route   DELETE /api/products/:id
 // @access  Private/Admin
 const deleteProduct = asyncHandler(async (req, res) => {
+
+  if (req.csrfToken() !== req.body._csrf) {
+    return res.status(403).json({ message: 'CSRF Token Invalid' });
+  }
+
   const product = await Product.findById(req.params.id);
 
   if (product) {
@@ -58,6 +72,11 @@ const deleteProduct = asyncHandler(async (req, res) => {
 // @route   POST /api/products
 // @access  Private/Admin
 const createProduct = asyncHandler(async (req, res) => {
+
+  if (req.csrfToken() !== req.body._csrf) {
+    return res.status(403).json({ message: 'CSRF Token Invalid' });
+  }
+
   const product = new Product({
     name: 'Sample name',
     price: 0,

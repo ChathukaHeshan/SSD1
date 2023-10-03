@@ -97,6 +97,7 @@ const FormDialog = ({ userId, handleClose }) => {
         {loading && <Loader open={loading} />}
         {loadingUpdate && <Loader open={loadingUpdate} />}
         <form className={classes.root} autoComplete="off">
+          <input type="hidden" name="_csrf" value={csrfToken} />
           <Typography align="center" variant="subtitle2">
             {user._id}
           </Typography>

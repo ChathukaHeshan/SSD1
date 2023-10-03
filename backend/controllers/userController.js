@@ -28,6 +28,10 @@ const authUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
+  if (req.csrfToken() !== req.body._csrf) {
+    return res.status(403).json({ message: 'CSRF Token Invalid' });
+  }
+
   const { name, email, password } = req.body;
 
   const userExists = await User.findOne({ email });
@@ -61,6 +65,10 @@ const registerUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users/profile
 // @access  Private
 const getUserProfile = asyncHandler(async (req, res) => {
+  if (req.csrfToken() !== req.body._csrf) {
+    return res.status(403).json({ message: 'CSRF Token Invalid' });
+  }
+
   const user = await User.findById(req.user._id);
 
   if (user) {
@@ -80,6 +88,10 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // @route   PUT /api/users/profile
 // @access  Private
 const updateUserProfile = asyncHandler(async (req, res) => {
+  if (req.csrfToken() !== req.body._csrf) {
+    return res.status(403).json({ message: 'CSRF Token Invalid' });
+  }
+
   const user = await User.findById(req.user._id);
 
   if (user) {
@@ -109,6 +121,9 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 // @route   POST /api/users
 // @access  Private/Admin
 const getUsers = asyncHandler(async (req, res) => {
+  if (req.csrfToken() !== req.body._csrf) {
+    return res.status(403).json({ message: 'CSRF Token Invalid' });
+  }
   const users = await User.find({});
   res.json(users);
 });
@@ -117,6 +132,10 @@ const getUsers = asyncHandler(async (req, res) => {
 // @route   POST /api/users/:id
 // @access  Private/Admin
 const deleteUser = asyncHandler(async (req, res) => {
+  if (req.csrfToken() !== req.body._csrf) {
+    return res.status(403).json({ message: 'CSRF Token Invalid' });
+  }
+
   const user = await User.findById(req.params.id);
   if (user) {
     await user.remove();
@@ -145,6 +164,10 @@ const getUserById = asyncHandler(async (req, res) => {
 // @route   PUT /api/users/:id
 // @access  Private/Admin
 const updateUser = asyncHandler(async (req, res) => {
+  if (req.csrfToken() !== req.body._csrf) {
+    return res.status(403).json({ message: 'CSRF Token Invalid' });
+  }
+  
   const user = await User.findById(req.params.id);
 
   if (user) {
